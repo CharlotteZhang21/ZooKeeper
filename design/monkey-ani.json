@@ -1,0 +1,36 @@
+{"frames": {
+
+"2.png":
+{
+	"frame": {"x":1,"y":1,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+},
+"3.png":
+{
+	"frame": {"x":131,"y":1,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+},
+"4.png":
+{
+	"frame": {"x":261,"y":1,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "enemy-animation.png",
+	"format": "RGBA8888",
+	"size": {"w":390,"h":130},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:98683b77858e7e2f659835ccf2e8c4cf:fa2c39858162a44d8035bc905863ba35:05eaf211017345c2f16319e5ac8111ae$"
+}
+}

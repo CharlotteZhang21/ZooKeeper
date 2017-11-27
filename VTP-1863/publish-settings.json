@@ -1,0 +1,35 @@
+{
+    "versions": [{
+        "label": "vungle-ccss-piec-control",
+        "settings": {
+            "PiecSettings.startingTiles": "emptyGrid"
+        }
+    }, {
+        "label": "vungle-ccss-piec-stripe-and-stripe",
+        "settings": {
+            "PiecSettings.startingTiles": "stripeAndStripe"
+        }
+    }, {
+        "label": "vungle-ccss-piec-wrapped-and-wrapped",
+        "settings": {
+            "PiecSettings.startingTiles": "wrappedAndWrapped"
+        }
+    }, {
+        "label": "vungle-ccss-piec-wrapped-and-stripe",
+        "settings": {
+            "PiecSettings.startingTiles": "wrappedAndStripe"
+        }
+    }, {
+        "label": "vungle-ccss-piec-liquorice-only",
+        "settings": {
+            "PiecSettings.startingTiles": "liquoriceOnly"
+        }
+    }, {
+        "label": "vungle-ccss-piec-liquorice-and-liquorice",
+        "settings": {
+            "PiecSettings.startingTiles": "liquoriceAndLiquorice"
+        }
+    }],
+    "replaceIn": ["settings.js", "settings-tap.js", "settings-swipe.js"],
+    "delete": []
+}
