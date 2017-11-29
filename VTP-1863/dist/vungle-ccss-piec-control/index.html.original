@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+    <title>Vungle Endcard</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+    @font-face {
+        font-family: "vungle-fonticon";
+        src: url("vungle-fonticon.eot");
+        src: url("vungle-fonticon.eot?#iefix") format("embedded-opentype"), url("vungle-fonticon.woff") format("woff"), url("vungle-fonticon.ttf") format("truetype"), url("vungle-fonticon.svg#vungle-fonticon") format("svg");
+        font-weight: normal;
+        font-style: normal;
+    }
+    /*
+    @font-face {
+        font-family: "bananasp";
+        src: url("FOT-KurokaneStd-EB.otf") format("opentype");
+        font-weight: normal;
+        font-style: normal;
+    }*/
+    </style>
+
+    <!-- logo strike start -->
+    <style>#vungle-footer {display: none !important; }</style>
+    <!-- logo strike end -->
+</head>
+
+<body class="preload">
+    <div id="vungle-header" class="portrait-light landscape-light">
+        <a id="vungle-close" class="show" data-icon="i" onclick="doSomething('close')"></a>
+    </div>
+    <div id="level-complete">
+        <img class="bg" src="assets/logo.gif" />
+        <a class="client-cta" href="javascript:void(0)" onclick="doSomething('download')"><img src="assets/cta.png"></a>
+    </div>
+    <div id="vungle-footer" class="portrait-dark landscape-dark portrait-right landscape-right"><span class="footer" data-icon="q"></span></div>
+    <!-- IEC Creative starts here v2.0 -->
+    <div id="fade-out"></div>
+
+    <div id="top-container">
+
+
+        <img id="victory" src="assets/victory.png"/>
+        <img id="top-bar" src="assets/top-bar.jpg" />
+        <img id="side-bar" src="assets/top-bar.jpg" />
+        <div id="top-bar-overlay">
+            <div id="characters">
+                <div id="self"></div>
+                <div id="enemy"></div>
+            </div>
+            <div class="energy-bar">
+                <div id="attack" class="attack">100</div>
+                <div id="defend" class="defend">100</div>
+            </div>
+            
+            <div id="movebg">
+                <div id="moves"></div>
+                <div class="movebg1"></div>
+                <div class="movebg2"></div>
+                <div class="movebg3"></div>
+            </div>
+        </div>
+    </div>
+    <div id="play-container">
+        <div id="game"></div>
+        <div id="game-mask">
+        </div>
+        <div id="under-game">
+            <svg id="bg-svg" viewBox="0 0 100 100">
+                <defs>
+                    <pattern id="checkerPattern" patternUnits="userSpaceOnUse">
+                        <rect id="checkerRect1" fill="#fafcde" />
+                        <rect id="checkerRect2" fill="#fcf5c0" />
+                        <rect id="checkerRect3" fill="#fcf5c0" />
+                        <rect id="checkerRect4" fill="#fafcde" />
+                    </pattern>
+                </defs>
+                <!-- <rect x="0" y="0" width="100" height="100" stroke-width="2" /> -->
+                <!-- <polygon cx="50" cy="50" r="25" stroke-width="2" /> -->
+                <path id="polygon" stroke-linejoin="round" stroke-width="1" style="fill: url(#checkerPattern);" />
+            </svg>
+        </div>
+         <div id="battle">
+            <div id="finalAtk">100</div>
+            <div id="finalDef">100</div>
+            <img src="assets/battle.png">
+        </div>
+    </div> 
+
+   
+    <div id="tooltip">
+    </div>
+    
+    
+    <div id="bottom-container">
+        <div class="logo" >
+            <img src="assets/logo.png">
+        </div>
+        <div class="placeholder" style="pointer-events: none;"></div>
+        <div id="client-footer">
+            <a id="ctaButton" class="client-cta" href="javascript:void(0)" onclick="doSomething('download')"><img src="assets/cta.png"></a>
+        </div>
+    </div>
+ 
+    <!-- IEC Creative ends here -->
+    <!-- phaser requires fonts to be preloaded before they can be used "in game" -->
+    <!-- note: you can add more fonts below -->
+    <!-- <div class="preload-font" style="font-family: mousememoirs;">.</div> -->    <script src="phaser.min.js"></script>
+    <script src="settings-grid-presets.js"></script>
+    <script src="settings.js"></script>
+    <script src="settings-swipe.js"></script>
+    <script src="settings-tap.js"></script>    <script src="bundle.min.js"></script>
+    <script>
+    var movesTaken = 0;
+
+    var score = 0;
+
+    var maxScore = 40;
+
+    var lastPercent = 0;
+
+    var attackNum = 100; //init default numbers
+    var defendNum = 100;
+
+    var tooltip = document.getElementById("tooltip");
+
+    // call out to vungle SDK
+    function doSomething(s) {
+        return actionClicked(s);
+    }
+
+    function resizeTopBarOverlay() {
+
+        var topBarOverlay = document.getElementById('top-bar-overlay');
+
+        var topBar = document.getElementById('top-bar');
+
+        topBarOverlay.style.width = topBar.offsetWidth + 'px';
+        topBarOverlay.style.height = topBar.offsetHeight + 'px';
+
+    }
+
+    function updateEnergyBar(moveStats) {
+
+        console.log(moveStats);
+
+        attackNum += moveStats['attack'];
+        defendNum += moveStats['defend'];
+
+        document.getElementById("attack").innerText = attackNum;
+        document.getElementById("defend").innerText = defendNum;
+
+    }
+
+
+    function setMoves() {
+
+        document.getElementById('moves').innerText = PiecSettings.numberOfInteractions;
+    }
+
+    function toggleCtaDisplay() {
+
+        if (movesTaken >= PiecSettings.numberOfMovesBeforeCtaShown) {
+
+            clientFooter.style.display = 'block';
+
+            setTimeout(function() {
+                clientFooter.className = 'show';
+            }, 0);
+        }
+    }
+
+    var playContainer = document.getElementById("play-container");
+    var topContainer = document.getElementById("top-container");
+    var bottomContainer = document.getElementById("bottom-container");
+    var tooltip = document.getElementById("tooltip");
+    var levelComplete = document.getElementById("level-complete");
+    var fadeOut = document.getElementById("fade-out");
+    var clientFooter = document.getElementById("client-footer");
+    var checkerPattern = document.getElementById('checkerPattern');
+    var checkerRect1 = document.getElementById('checkerRect1');
+    var checkerRect2 = document.getElementById('checkerRect2');
+    var checkerRect3 = document.getElementById('checkerRect3');
+    var checkerRect4 = document.getElementById('checkerRect4');
+    var selfCharacter = document.getElementById('self');
+    var enemyCharacter = document.getElementById('enemy');
+
+
+    function setupBgGrid() {
+
+        var unitSize = (1 / PiecSettings.fieldSize) * 100;
+
+        checkerPattern.setAttribute('height', unitSize * 2);
+        checkerPattern.setAttribute('width', unitSize * 2);
+
+        checkerRect1.setAttribute('height', unitSize);
+        checkerRect1.setAttribute('width', unitSize);
+        checkerRect1.setAttribute('x', 0);
+        checkerRect1.setAttribute('y', 0);
+
+        checkerRect2.setAttribute('height', unitSize);
+        checkerRect2.setAttribute('width', unitSize);
+        checkerRect2.setAttribute('x', unitSize);
+        checkerRect2.setAttribute('y', 0);
+
+        checkerRect3.setAttribute('height', unitSize);
+        checkerRect3.setAttribute('width', unitSize);
+        checkerRect3.setAttribute('x', 0);
+        checkerRect3.setAttribute('y', unitSize);
+
+        checkerRect4.setAttribute('height', unitSize);
+        checkerRect4.setAttribute('width', unitSize);
+        checkerRect4.setAttribute('x', unitSize);
+        checkerRect4.setAttribute('y', unitSize);
+    }
+
+    function showVungleCloseBtn() {
+        var vungleClose = document.getElementById('vungle-close');
+
+        if (vungleClose.classList)
+            vungleClose.classList.add('visible');
+        else
+            vungleClose.className += ' ' + 'visible';
+    }
+
+    window.onload = function() {
+
+        setupBgGrid();
+
+        toggleCtaDisplay();
+
+        resizeTopBarOverlay();
+
+        setMoves();
+
+        document.body.classList.remove("preload");
+
+        if (fadeOut.classList)
+            fadeOut.classList.add('hide');
+        else
+            fadeOut.className += ' ' + 'hide';
+        setTimeout(function() {
+            fadeOut.style.display = "none";
+        }, 500);
+
+        tooltip.addEventListener('click', function() {
+            tooltip.className = 'hide';
+            setTimeout(function() {
+                tooltip.style.display = "none";
+                document.getElementById("game").style.opacity = 1;
+
+            }, 300);
+        });
+
+        setTimeout(function(){
+            tooltip.className = 'hide';
+            showVungleCloseBtn();
+            setTimeout(function() {
+                tooltip.style.display = "none";
+                // tooltip.style = "none";
+                document.getElementById("game").style.opacity = 1;
+            },300)
+        }, 3000);
+
+    };
+
+    var piec = piec || {};
+
+    piec.onResize = function() {
+
+        setTimeout(function() {
+
+            resizeTopBarOverlay();
+        }, 200);
+    }
+
+    PiecSettings.onGameComplete = function() {
+
+
+        // piec.destroyGame();
+
+        setTimeout(function(){
+            if (playContainer.classList)
+                playContainer.classList.add('hide');
+            else
+                playContainer.className += ' ' + 'hide';
+
+            if (topContainer.classList)
+                topContainer.classList.add('full');
+            else
+                topContainer.className += ' ' + 'full';
+
+            if (bottomContainer.classList)
+                bottomContainer.classList.add('full');
+            else
+                bottomContainer.className += ' ' + 'full';
+
+            levelComplete.style.opacity = 1;
+        },5000);
+        
+    }
+
+    PiecSettings.onMoveComplete = function(moveStats) {
+
+        // score += moveStats.totalDestroyed;
+
+        updateEnergyBar(moveStats);
+
+        if (PiecSettings.numberOfInteractions <= 0) {
+
+            piec.lockGame();
+
+             //  show BATTLE!!
+            setTimeout(function(){
+                document.getElementById('battle').className = 'show';
+                selfCharacter.className = 'fight';
+                enemyCharacter.className = 'fight';
+                document.getElementById("finalAtk").innerText = attackNum;
+                document.getElementById("finalDef").innerText = defendNum;
+            }, 1000);
+
+            // show End!! 
+            setTimeout(function(){
+                document.getElementById('victory').className = 'show';
+            }, 3000);
+
+            piec.completeLevel();
+
+            return;
+        }
+
+    };
+
+    PiecSettings.onMoveStart = function(moveStats) {
+
+        PiecSettings.numberOfInteractions--;
+
+        // cannot have minus moves
+        if (PiecSettings.numberOfInteractions < 0) {
+            PiecSettings.numberOfInteractions = 0;
+        }
+
+        setMoves();
+    };
+    </script>
+</body>
+
+</html>

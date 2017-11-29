@@ -16,13 +16,13 @@
         font-weight: normal;
         font-style: normal;
     }
-    
+    /*
     @font-face {
         font-family: "bananasp";
         src: url("FOT-KurokaneStd-EB.otf") format("opentype");
         font-weight: normal;
         font-style: normal;
-    }
+    }*/
     </style>
 
     <!-- logo strike start -->
@@ -85,19 +85,23 @@
                 <path id="polygon" stroke-linejoin="round" stroke-width="1" style="fill: url(#checkerPattern);" />
             </svg>
         </div>
-
-        <div id="battle">
-            <div id="finalAtk"></div>
-            <div id="finalDef"></div>
+         <div id="battle">
+            <div id="finalAtk">100</div>
+            <div id="finalDef">100</div>
             <img src="assets/battle.png">
         </div>
     </div> 
-    <div id="tooltip" style="display: none;">
+
+   
+    <div id="tooltip">
     </div>
     
     
     <div id="bottom-container">
-        <img class="logo" src="assets/logo.png">
+        <div class="logo" >
+            <img src="assets/logo.png">
+        </div>
+        <div class="placeholder" style="pointer-events: none;"></div>
         <div id="client-footer">
             <a id="ctaButton" class="client-cta" href="javascript:void(0)" onclick="doSomething('download')"><img src="assets/cta.png"></a>
         </div>
@@ -268,11 +272,7 @@
             tooltip.className = 'hide';
             setTimeout(function() {
                 tooltip.style.display = "none";
-
-                if (PiecSettings.isSwipe === false) {
-                    //play first tap
-                    PiecSettings.pickInitialTile.dispatch();
-                }
+                document.getElementById("game").style.opacity = 1;
 
             }, 300);
         });
@@ -282,18 +282,11 @@
             showVungleCloseBtn();
             setTimeout(function() {
                 tooltip.style.display = "none";
-
-                if (PiecSettings.isSwipe === false) {
-                    //play first tap
-                    PiecSettings.pickInitialTile.dispatch();
-                }
-
-            }, 300);
+                // tooltip.style = "none";
+                document.getElementById("game").style.opacity = 1;
+            },300)
         }, 3000);
 
-        setTimeout(function() {
-            showVungleCloseBtn();
-        }, 4000);
     };
 
     var piec = piec || {};
@@ -327,7 +320,7 @@
             else
                 bottomContainer.className += ' ' + 'full';
 
-            levelComplete.classList += 'show';
+            levelComplete.style.opacity = 1;
         },5000);
         
     }
