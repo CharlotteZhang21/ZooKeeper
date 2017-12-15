@@ -150,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>../self-animation.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -187,7 +187,7 @@
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -199,7 +199,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">panda/1.png</key>
             <key type="filename">panda/2.png</key>
             <key type="filename">panda/3.png</key>
             <key type="filename">panda/4.png</key>
@@ -218,7 +217,6 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>panda/1.png</filename>
             <filename>panda/2.png</filename>
             <filename>panda/3.png</filename>
             <filename>panda/4.png</filename>

@@ -260,6 +260,10 @@
 
         document.body.classList.remove("preload");
 
+        document.getElementById('self').className = 'idle';
+        document.getElementById('enemy').className = 'idle';
+        
+
         if (fadeOut.classList)
             fadeOut.classList.add('hide');
         else

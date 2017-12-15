@@ -70,7 +70,7 @@ a {
     right: 0;
     position: absolute;
     text-align: right;
-    opacity: 1;
+    opacity: 0;
     pointer-events: none;
 }
 
@@ -975,8 +975,13 @@ canvas {
     width: 128px;
     height: 128px;
     background: url(../assets/self-animation.png) no-repeat;
+    
+}
+
+#self.idle {
     -webkit-animation: idle 1s steps(1) infinite;
     animation: idle 1s steps(1) infinite;
+
 }
 
 #self.fight {
@@ -992,6 +997,9 @@ canvas {
     width: 128px;
     height: 128px;
     background: url(../assets/enemy-animation.png) no-repeat;
+}
+
+#enemy.idle {
     -webkit-animation: idle 1s steps(1) infinite;
     animation: idle 1s steps(1) infinite;
 }
